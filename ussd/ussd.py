@@ -23,16 +23,16 @@ def ussd(request):
                 response = "CON What would you want to check \n"
                 response += "1. My Account Balance \n"
                 response += "2. Loan"
+                return HttpResponse(response)
 
             elif text == '1':
                 # Business logic for first level response
-                balance = current_user.balance
-
                 response = "END Your Account Balance is" + balance
+                return HttpResponse(response)
 
             elif text == '2':
-                # This is a terminal request. Note how we start the response with END
-                response = "CON Your phone number is "
+                response = "CON How much Loan do you need \n"
+
 
             else:
                 response = "END Invalid choice"
@@ -47,6 +47,7 @@ def ussd(request):
             elif text == '1':
                 # Business logic for first level response
                 response = "CON Enter your first_name \n"
+                return HttpResponse(response)
 
             elif text == '2':
                 # This is a terminal request. Note how we start the response with END
