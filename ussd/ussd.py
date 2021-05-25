@@ -57,15 +57,17 @@ def ussd_main(request):
                 response += "2. Exit"
 
             elif data[0] == '1':
-                # Business logic for first level response
-                response = "CON Enter your first_name \n"
-                response += "Enter your surname \n"
-                first_name, surname = data[1], data[2]
-                Customer.objects.create(first_name=first_name, last_name=surname, phone_number=phone_number,
-                                        balance=0.00)
-
-                response = "END Your account with " + phone_number + "has been created."
-                return HttpResponse(response)
+                if len(data) == 1:
+                    response = "CON Enter your first_name \n"
+                    return HttpResponse(response)
+                elif len(data) == 2:
+                    response = "Enter your surname \n"
+                    return HttpResponse(response)
+                elif len(data) == 3:
+                    response = "END Your account with " + phone_number + " has been created."
+                    first_name, surname = data[1], data[2]
+                    Customer.objects.create(first_name=first_name, last_name=surname, phone_number=phone_number, balance=0.00)
+                    return HttpResponse(response)
 
             elif data[0] == '2':
                 # This is a terminal request. Note how we start the response with END
