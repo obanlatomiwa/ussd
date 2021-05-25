@@ -65,7 +65,7 @@ def ussd_main(request):
                     response = "CON Enter your first_name \n"
                     return HttpResponse(response)
                 elif len(data) == 2:
-                    response = "Enter your surname \n"
+                    response = "CON Enter your surname \n"
                     return HttpResponse(response)
                 elif len(data) == 3:
                     response = "END Your account " + phone_number + " has been created."
