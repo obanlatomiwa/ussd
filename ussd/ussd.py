@@ -39,7 +39,7 @@ def ussd_main(request):
                 response = "END Your Account Balance is " + str(current_user.balance)
                 return HttpResponse(response)
 
-            elif data[0] == '2' and len(data) == 1:
+            elif data[0] == '2':
                 if data[0] == '2' and len(data) == 1:
                     response = "CON Your Loan Application \n"
                     response += "1. Start Loan Application \n"
