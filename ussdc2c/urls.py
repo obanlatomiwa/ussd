@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from ussd import views
+from ussd import ussd
 
 router = routers.DefaultRouter()
 router.register(r'customers', views.CustomerViewSet)
@@ -26,5 +27,6 @@ router.register(r'customers', views.CustomerViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('ussd/', ussd.ussd_main, name='ussd'),
     path('auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
