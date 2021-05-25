@@ -46,7 +46,7 @@ def ussd_main(request):
                     response += "2. Exit"
                     return HttpResponse(response)
 
-                elif data[1] == '1' and len(data) == 2:
+                elif data[1] == '1':
                     if len(data) == 2:
                         response = "CON Enter your bvn \n"
                         return HttpResponse(response)
