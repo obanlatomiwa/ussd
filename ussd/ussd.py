@@ -34,15 +34,18 @@ def ussd_main(request):
                 response += "2. Loan"
                 return HttpResponse(response)
 
-            elif data[0] == '1':
+            elif data[0] == '1' and len(data) == 1:
                 # Business logic for first level response
                 response = "END Your Account Balance is " + str(current_user.balance)
                 return HttpResponse(response)
 
-            elif data[0] == '2':
+            elif data[0] == '2' and len(data) == 1:
                 response = "CON How much Loan do you need \n"
-                response += "END Your Loan of " + data[0] + " has been accepted."
+                return HttpResponse(response)
 
+            elif data[0] == '2' and len(data) == 2:
+                loan_amount = data[1]
+                response = "END Your Loan of " + loan_amount + " has been accepted."
                 return HttpResponse(response)
 
             else:
@@ -64,9 +67,10 @@ def ussd_main(request):
                     response = "Enter your surname \n"
                     return HttpResponse(response)
                 elif len(data) == 3:
-                    response = "END Your account with " + phone_number + " has been created."
+                    response = "END Your account " + phone_number + " has been created."
                     first_name, surname = data[1], data[2]
-                    Customer.objects.create(first_name=first_name, last_name=surname, phone_number=phone_number, balance=0.00)
+                    Customer.objects.create(first_name=first_name, last_name=surname, phone_number=phone_number,
+                                            balance=0.00)
                     return HttpResponse(response)
 
             elif data[0] == '2':
@@ -77,9 +81,6 @@ def ussd_main(request):
             else:
                 response = "END Invalid choice"
                 return HttpResponse(response)
-
-        # Send the response back to the API
-        return HttpResponse(response)
 
     else:
         return HttpResponse('Your are not using a post request')
