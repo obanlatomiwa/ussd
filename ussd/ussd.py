@@ -58,6 +58,7 @@ def ussd_main(request):
                 response = "CON Welcome to Cashcard \n"
                 response += "1. Create Your Account \n"
                 response += "2. Exit"
+                return HttpResponse(response)
 
             elif data[0] == '1':
                 if len(data) == 1:
