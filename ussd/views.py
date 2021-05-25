@@ -5,8 +5,8 @@ from rest_framework import permissions
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .models import Customer
-from .serializers import CustomerSerializer
+from .models import Customer, Loan
+from .serializers import CustomerSerializer, LoanSerializer
 
 
 class CustomerViewSet(viewsets.ModelViewSet):
@@ -17,3 +17,8 @@ class CustomerViewSet(viewsets.ModelViewSet):
     # def perform_create(self, serializer):
     #     serializer.save(owner=self.request.user)
 
+
+class LoanViewSet(viewsets.ModelViewSet):
+    queryset = Loan.objects.all()
+    serializer_class = LoanSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

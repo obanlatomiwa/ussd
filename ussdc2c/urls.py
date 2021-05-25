@@ -21,6 +21,8 @@ from ussd import ussd
 
 router = routers.DefaultRouter()
 router.register(r'customers', views.CustomerViewSet)
+router.register(r'loans', views.LoanViewSet)
+
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
