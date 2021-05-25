@@ -60,8 +60,8 @@ def ussd_main(request):
                         response = "END Your Loan application has been sent, and it's under verification." \
                                    " You will get a SMS if successful \n"
 
-                        bvn, loan_amount, return_date, loaner = data[2], data[3], data[4], current_user.id
-                        Loan.objects.create(loaner=loaner, bvn=bvn, return_date=return_date, loan_amount=loan_amount)
+                        bvn, loan_amount, return_date = data[2], data[3], data[4]
+                        Loan.objects.create(loaner=current_user, bvn=bvn, return_date=return_date, loan_amount=loan_amount)
                         return HttpResponse(response)
 
             # elif data[0] == '2' and len(data) == 2:
