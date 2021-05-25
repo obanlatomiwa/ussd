@@ -19,3 +19,19 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.first_name
+
+
+class Loan(models.Model):
+    loaner = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    bvn = models.CharField(max_length=30)
+    return_date = models.CharField(max_length=30)
+    loan_amount = models.DecimalField(max_digits=30, decimal_places=2, default=0)
+
+    class Meta:
+        ordering = ['created']
+        verbose_name = 'loan'
+        verbose_name_plural = 'loans'
+
+    def __str__(self):
+        return self.first_name

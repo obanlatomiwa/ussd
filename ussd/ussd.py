@@ -1,7 +1,7 @@
 import os
 import requests
 from django.conf import settings
-from .models import Customer
+from .models import Customer, Loan
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse, Http404, HttpResponseNotFound
@@ -40,8 +40,29 @@ def ussd_main(request):
                 return HttpResponse(response)
 
             elif data[0] == '2' and len(data) == 1:
-                response = "CON How much Loan do you need \n"
-                return HttpResponse(response)
+                if data[0] == '2' and len(data) == 1:
+                    response = "CON Your Loan Application \n"
+                    response += "1. Start Loan Application \n"
+                    response += "2. Exit"
+                    return HttpResponse(response)
+
+                elif data[1] == '1' and len(data) == 2:
+                    if len(data) == 2:
+                        response = "CON Enter your bvn \n"
+                        return HttpResponse(response)
+                    elif len(data) == 3:
+                        response = "CON Enter Loan Amount \n"
+                        return HttpResponse(response)
+                    elif len(data) == 4:
+                        response = "CON Enter Return Date in the format day/month/year \n"
+                        return HttpResponse(response)
+                    elif len(data) == 5:
+                        response = "END Your Loan application has been sent, and it's under verification." \
+                                   " You will get a SMS if successful \n"
+
+                        bvn, loan_amount, return_date, loaner = data[2], data[3], data[4], current_user.id
+                        Loan.objects.create(loaner=loaner, bvn=bvn, return_date=return_date, loan_amount=loan_amount)
+                        return HttpResponse(response)
 
             elif data[0] == '2' and len(data) == 2:
                 loan_amount = data[1]
