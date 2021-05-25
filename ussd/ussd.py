@@ -13,12 +13,17 @@ def ussd_main(request):
     # Read the variables sent via POST from our API
 
     if request.method == "POST":
-        session_id = request.values.get("sessionId", None)
-        serviceCode = request.values.get("serviceCode", None)
-        phone_number = request.values.get("phoneNumber", None)
-        text = request.values.get("text", " ")
+        print(request.POST)
+        session_id = request.POST.get("sessionId", None)
+        serviceCode = request.POST.get("serviceCode", None)
+        phone_number = request.POST.get("phoneNumber", None)
+        text = request.POST.get("text", " ")
 
-        current_user = Customer.objects.get(phone_number=phone_number)
+        try:
+            current_user = Customer.objects.get(phone_number=phone_number)
+        except Customer.DoesNotExist:
+            current_user = None
+
         data = text.split('*')
 
         if current_user:
@@ -31,12 +36,12 @@ def ussd_main(request):
 
             elif data[0] == '1':
                 # Business logic for first level response
-                response = "END Your Account Balance is" + balance
+                response = "END Your Account Balance is " + str(current_user.balance)
                 return HttpResponse(response)
 
             elif data[0] == '2':
                 response = "CON How much Loan do you need \n"
-                response += "END Your Loan of " + data[1] + " has been accepted."
+                response += "END Your Loan of " + data[0] + " has been accepted."
 
                 return HttpResponse(response)
 
