@@ -64,10 +64,10 @@ def ussd_main(request):
                         Loan.objects.create(loaner=loaner, bvn=bvn, return_date=return_date, loan_amount=loan_amount)
                         return HttpResponse(response)
 
-            elif data[0] == '2' and len(data) == 2:
-                loan_amount = data[1]
-                response = "END Your Loan of " + loan_amount + " has been accepted."
-                return HttpResponse(response)
+            # elif data[0] == '2' and len(data) == 2:
+            #     loan_amount = data[1]
+            #     response = "END Your Loan of " + loan_amount + " has been accepted."
+            #     return HttpResponse(response)
 
             else:
                 response = "END Invalid choice"
